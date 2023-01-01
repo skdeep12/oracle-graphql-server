@@ -15,22 +15,32 @@ import 'dotenv/config'
 const typeDefs = `#graphql
 
   # Comments in GraphQL strings (such as this one) start with the hash (#) symbol.
-
-
-  # This "Book" type defines the queryable fields for every book in our data source.
-
   type Company {
-
+    id: ID! @id
     name: String
-
+    industries: [Industry!]! @relationship(type: "PART_OF", direction: OUT)
   }
+  type Industry {
+    id: ID! @id
+    name: String
+    companies: [Company!]! @relationship(type: "PART_OF", direction: IN)
+  }
+
   type Query {
     companies: [Company]
+    industries: [Industry]
+  }
+
+  input IndustryInput {
+    id: ID!
+  }
+
+  input CompanyInput {
+    id: ID!
   }
 
 `;
 
-console.log(process.env.NEO4J_URI)
 
 const driver = neo4j.driver(
     process.env.NEO4J_URI,
