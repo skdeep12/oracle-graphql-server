@@ -19,6 +19,7 @@ const typeDefs = `#graphql
     id: ID! @id
     name: String
     industries: [Industry!]! @relationship(type: "PART_OF", direction: OUT)
+    isin: String
   }
   type Industry {
     id: ID! @id
@@ -38,7 +39,6 @@ const typeDefs = `#graphql
   input CompanyInput {
     id: ID!
   }
-
 `;
 
 
